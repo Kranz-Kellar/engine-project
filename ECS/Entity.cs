@@ -10,7 +10,7 @@ namespace EngineProject.ECS
 {
     public class Entity : IEntity
     {
-        private int Id;
+        private Util.UniqueId Id;
         private string Name;
         private bool Enabled;
 
@@ -19,16 +19,14 @@ namespace EngineProject.ECS
 
         public Entity(string name)
         {
+            this.Id = new Util.UniqueId();
             this.Name = name;
             this.components = new List<Component>();
             //Magic number
             this.componentMask = new BitArray(32);
-
-            //Generate unique id
-            this.Id = 0;
         }
 
-        public int GetId()
+        public Util.UniqueId GetId()
         {
             return this.Id;
         }
@@ -63,7 +61,10 @@ namespace EngineProject.ECS
             //VERY CLEVER, lol
             //Later this will return something more informative
             if (HasComponent(component.GetComponentType()))
+            {
+                Util.Logger.Log($"Component of type {component.GetComponentType()} is already exists in entity {this.Id}", Util.LogStatus.ERROR);
                 return null;
+            }
 
             this.components.Add(component);
             this.componentMask[(int)component.GetComponentType()] = true;

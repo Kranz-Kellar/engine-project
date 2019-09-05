@@ -8,16 +8,16 @@ namespace EngineProject.ECS
 {
     public abstract class Component
     {
-        protected int id;
+        protected Util.UniqueId id;
         protected ComponentType type;
 
         public Component()
         {
             //Setting unque id here
-            this.id = 0;           
+            this.id = new Util.UniqueId();           
         }
 
-        public int GetId() => this.id;
+        public Util.UniqueId GetId() => this.id;
         public ComponentType GetComponentType() => this.type;
     }
 
