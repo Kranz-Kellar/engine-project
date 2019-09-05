@@ -8,6 +8,7 @@ namespace EngineProject.ECS
 {
     public interface IEntity
     {
+        int GetId();
         void Init();
         bool IsEnabled();
         void Enable();

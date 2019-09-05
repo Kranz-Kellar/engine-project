@@ -8,8 +8,8 @@ namespace EngineProject.ECS
 {
     public abstract class Component
     {
-        private int id;
-        private ComponentType type;
+        protected int id;
+        protected ComponentType type;
 
         public Component()
         {
@@ -24,5 +24,6 @@ namespace EngineProject.ECS
     public enum ComponentType
     {
         VOID,
+        HEALTH
     }
 }

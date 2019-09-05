@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EngineProject.Components;
 
 namespace EngineProject.ECS
 {
@@ -11,7 +12,7 @@ namespace EngineProject.ECS
     {
         private int Id;
         private string Name;
-        private bool enabled;
+        private bool Enabled;
 
         private List<Component> components;
         private BitArray componentMask;
@@ -27,46 +28,40 @@ namespace EngineProject.ECS
             this.Id = 0;
         }
 
-        public int getId()
+        public int GetId()
         {
             return this.Id;
         }
 
-        public Component addComponent(Component component)
-        {
-            components.Add(component);
-
-            return component;
-        }
-
-        public Component getComponent(ComponentType type)
-        {
-            return components.Find(x => x.GetComponentType() == type);
-        }
-
         public void Init()
         {
-            throw new NotImplementedException();
+            this.Enabled = true;
         }
 
         public bool IsEnabled()
         {
-            return enabled;
+            return Enabled;
         }
 
         public void Enable()
         {
-            this.enabled = true;
+            this.Enabled = true;
         }
 
         public void Disable()
         {
-            this.enabled = false;
+            this.Enabled = false;
+        }
+
+        public void ChangeName(string newName)
+        {
+            this.Name = newName;
         }
 
         public Component AddComponent(Component component)
         {
             //VERY CLEVER, lol
+            //Later this will return something more informative
             if (HasComponent(component.GetComponentType()))
                 return null;
 
@@ -87,9 +82,7 @@ namespace EngineProject.ECS
         public bool HasComponent(ComponentType type)
         {
             if (componentMask[(int)type] != false)
-            {
                 return true;
-            }
 
             return false;
         }
@@ -103,5 +96,6 @@ namespace EngineProject.ECS
             this.components.Remove(component);
             this.componentMask[(int)type] = false;
         }
+
     }
 }
