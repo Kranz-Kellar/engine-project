@@ -6,8 +6,23 @@ using System.Threading.Tasks;
 
 namespace EngineProject.ECS
 {
-    public class Component
+    public abstract class Component
     {
+        private int id;
+        private ComponentType type;
 
+        public Component()
+        {
+            //Setting unque id here
+            this.id = 0;           
+        }
+
+        public int GetId() => this.id;
+        public ComponentType GetComponentType() => this.type;
+    }
+
+    public enum ComponentType
+    {
+        VOID,
     }
 }

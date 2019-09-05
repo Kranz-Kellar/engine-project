@@ -9,13 +9,14 @@ namespace EngineProject.ECS
     public interface IEntity
     {
         void Init();
-        void IsEnabled();
+        bool IsEnabled();
         void Enable();
         void Disable();
 
-        void AddComponent();
-        void GetComponent();
-        void HasComponent();
+        Component AddComponent(Component component);
+        Component GetComponent(ComponentType type);
+        void RemoveComponent(ComponentType type);
+        bool HasComponent(ComponentType type);
 
     }
 }

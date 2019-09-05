@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EngineProject.ECS
 {
-    class System
+    public abstract class System
     {
     }
 }
