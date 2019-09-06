@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace EngineProject.Input
 {
-    class Command
+    public class Command
     {
+
     }
 }
