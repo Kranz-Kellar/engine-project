@@ -16,18 +16,10 @@ namespace EngineProject
         {
             Stopwatch s = new Stopwatch();
             s.Start();
-            var ent = EntityManager.CreateEntity("test");
-            ent.AddComponent(new HealthComponent(500));
 
-
-            for (int i = 0; i < 100; i++)
-            {
-                var ent2 = EntityManager.CreateEntity("test");
-                Logger.Log($"{ent2.GetId().GetValue()}", LogStatus.INFO);
-            }
+           
 
             s.Stop();
-
             Logger.Log($"Passed time {s.Elapsed}", LogStatus.DEBUG);
             
         }

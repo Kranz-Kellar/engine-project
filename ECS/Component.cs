@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using EngineProject.Util;
 
 namespace EngineProject.ECS
 {
     public abstract class Component
     {
-        protected Util.UniqueId id;
+        protected UniqueId id;
         protected ComponentType type;
 
         public Component()
         {
             //Setting unque id here
-            this.id = new Util.UniqueId();           
+            this.id = new UniqueId();           
         }
 
-        public Util.UniqueId GetId() => this.id;
+        public UniqueId GetId() => this.id;
         public ComponentType GetComponentType() => this.type;
     }
 
