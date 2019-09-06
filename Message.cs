@@ -9,12 +9,14 @@ namespace EngineProject
 
     public class Message
     {
+        public EngineSystem owner;
         public MessageType type;
         public object data;
 
-        public Message(MessageType type, object data = null)
+        public Message(MessageType type, EngineSystem owner, object data = null)
         {
             this.type = type;
+            this.owner = owner;
             this.data = data;
         }
 

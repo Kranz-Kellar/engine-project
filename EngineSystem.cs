@@ -8,7 +8,7 @@ namespace EngineProject
 {
     //Класс для группировки всех систем
     //Нужен для MessageManager
-    public abstract class EngineSystem
+    public class EngineSystem
     {
         public List<MessageType> subscribedMessageType;
         public virtual void Init()
@@ -18,7 +18,8 @@ namespace EngineProject
 
         public void SubscribeOnMessageType(MessageType type)
         {
-            this.subscribedMessageType.Add(type);
+            if (!IsSubscribedOnMessageType(type))
+            subscribedMessageType.Add(type);
         }
 
         public void SendMessage(Message msg)
@@ -29,7 +30,7 @@ namespace EngineProject
             MessageManager.SendMessageBroadcast(msg);
         }
 
-        public bool SubscribedOnMessageType(MessageType type)
+        public bool IsSubscribedOnMessageType(MessageType type)
         {
             if (subscribedMessageType.Contains(type))
                 return true;
@@ -37,6 +38,6 @@ namespace EngineProject
             return false;
         }
 
-        public abstract void ReceiveMessage(Message msg);
+        public virtual void ReceiveMessage(Message msg) { }
     }
 }

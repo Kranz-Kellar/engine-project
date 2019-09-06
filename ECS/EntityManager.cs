@@ -7,24 +7,35 @@ using EngineProject.Util;
 
 namespace EngineProject.ECS
 {
-    public sealed class EntityManager 
+    public sealed class EntityManager : EngineSystem
     {
-        private static List<Entity> globalEnts = new List<Entity>();
+        private List<Entity> globalEnts = new List<Entity>();
 
-        public static Entity CreateEntity()
+        public EntityManager()
+        {
+            Init();
+        }
+
+        public override void Init()
+        {
+            base.Init();
+            this.SubscribeOnMessageType(MessageType.GLOBAL_MESSAGE);
+        }
+
+        public UniqueId CreateEntity()
         {
             Entity newEnt = new Entity();
             globalEnts.Add(newEnt);
             //Send message here
-            return newEnt;
+            return newEnt.Id;
         }
 
-        public static Entity GetEntById(UniqueId id)
+        private Entity GetEntById(UniqueId id)
         {
             return globalEnts.Find(x => x.Id == id);
         }
 
-        public static void DestroyEnt(UniqueId id)
+        public void DestroyEnt(UniqueId id)
         {
             var ent = GetEntById(id);
             if(ent != null)
@@ -40,7 +51,7 @@ namespace EngineProject.ECS
         //Убрать прямую передачу ссылки на компонент
         //Заменить передачей типа и создавать компонент внутри,
         //запрашивая фабрику компонентов
-        public static Component AddComponent(UniqueId id, Component component)
+        public Component AddComponent(UniqueId id, Component component)
         {
             //Generate message here
             if (HasComponent(id, component.GetComponentType()))
@@ -53,7 +64,7 @@ namespace EngineProject.ECS
             return component;
         }
 
-        public static void RemoveComponent(UniqueId id, ComponentType type)
+        public void RemoveComponent(UniqueId id, ComponentType type)
         {
             //Message here
             if (!HasComponent(id, type))
@@ -64,7 +75,7 @@ namespace EngineProject.ECS
             ent.componentMask[(int)type] = false;
         }
 
-        public static bool HasComponent(UniqueId id, ComponentType type) 
+        public bool HasComponent(UniqueId id, ComponentType type) 
         {
             //Generate message here
             if (id == null)
@@ -76,19 +87,31 @@ namespace EngineProject.ECS
             return false;
         }
 
-        public static bool IsEnabled(UniqueId id)
+        public bool IsEnabled(UniqueId id)
         {
             return GetEntById(id).Enabled;
         }
 
-        public static void Enable(UniqueId id)
+        public void Enable(UniqueId id)
         {
             GetEntById(id).Enabled = true;
         }
 
-        public static void Disabled(UniqueId id)
+        public void Disabled(UniqueId id)
         {
             GetEntById(id).Enabled = false;
+        }
+
+        //Постараться убрать switch
+        //
+        public override void ReceiveMessage(Message msg)
+        {
+            switch(msg.type)
+            {
+                case MessageType.GLOBAL_MESSAGE:
+                    Logger.Log("SOMETHING HAPPEND??>", LogStatus.DEBUG);
+                    break;
+            }
         }
     }
 }
